@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aquila Research: 솔라나 생태계 심층 분석</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Professional Neutrals with Gold Accents -->
+    <!-- Application Structure Plan: This is a professional research report structured as a single-page application. The information architecture follows a logical narrative flow: starting with a high-level Executive Summary, moving to a key Institutional Signal (the STSS case), then diving into the asset's Technical Outlook, followed by an interactive exploration of Ecosystem Coins, and concluding with alternative investment vehicles like Public Equities & ETFs. A sticky navigation bar allows users to either follow the narrative or jump to specific sections of interest. This structure was chosen to cater to different user types: C-level executives might only read the summary, while analysts can deep-dive into specific sections. Interactivity is focused on filtering and exploration to make dense data digestible. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: STSS market reaction. -> Goal: Inform & Empathize. -> Viz/Method: Key Metric Cards (HTML/CSS). -> Interaction: Static display. -> Justification: Quickly conveys the most impactful numbers (stock surge, funding amount) without the complexity of a chart.
+        - Report Info: SOL technical analysis. -> Goal: Analyze. -> Viz/Method: Static Image. -> Interaction: None. -> Justification: Using a pre-rendered image for the technical chart ensures specific annotations and analysis points are displayed exactly as intended, removing the need for complex client-side chart generation.
+        - Report Info: Beta coin details. -> Goal: Compare & Organize. -> Viz/Method: Interactive Filterable Cards + Bubble Chart (Risk Matrix) with a static legend. -> Interaction: Category buttons filter cards; hover on bubbles for details; static legend for PDF. -> Justification: The dual-view (interactive chart + static legend) allows for dynamic exploration on the web and clear, non-interactive reference for print/PDF versions. -> Library: Chart.js, Vanilla JS.
+        - Report Info: Solana-related public companies/ETFs. -> Goal: Organize & Compare. -> Viz/Method: Interactive HTML Table. -> Interaction: Hover highlights rows. -> Justification: A table is the most effective format for comparing structured data across multiple entities (Ticker, Category, Analysis). -> Library: Vanilla JS + Tailwind CSS.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Poppins', 'Noto Sans KR', sans-serif;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        .aquila-header {
+            border-bottom: 2px solid #e9ecef;
+        }
+        .aquila-title {
+            font-weight: 700;
+            color: #000;
+        }
+        .report-title {
+            color: #3a3a3a;
+        }
+        .section-title {
+            font-weight: 600;
+            color: #343a40;
+            border-bottom: 3px solid #e0c48f;
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+        .active-nav {
+            color: #b38f50;
+            font-weight: 600;
+            border-bottom: 2px solid #b38f50;
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+        .nav-link:hover {
+            color: #b38f50;
+        }
+        .card {
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0.5rem 1rem rgba(0,0,0,.1);
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 1rem;
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 0.5rem;
+        }
+        .metric-card {
+             background: linear-gradient(145deg, #ffffff, #e6e6e6);
+             border-left: 5px solid #e0c48f;
+        }
+        .table-header {
+            background-color: #343a40;
+            color: #ffffff;
+        }
+        .disclaimer {
+            font-size: 0.75rem;
+            color: #6c757d;
+            border-top: 1px solid #dee2e6;
+            padding-top: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        @media print {
+            @page {
+                size: A4;
+                margin: 1.5cm;
+            }
+            body {
+                background-color: #fff;
+                font-size: 9pt;
+                line-height: 1.4;
+            }
+            .container {
+                max-width: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            nav, #category-buttons {
+                display: none !important;
+            }
+            .print-first-page {
+                page-break-after: always;
+            }
+            section {
+                page-break-before: always;
+                margin-top: 1.5rem;
+            }
+            .card, .chart-container, table, .p-6.bg-white, .metric-card {
+                page-break-inside: avoid;
+                box-shadow: none !important;
+                border: 1px solid #ccc;
+            }
+            footer.disclaimer {
+                page-break-before: auto;
+                margin-top: 2rem;
+            }
+            .aquila-header { margin-bottom: 1rem !important; }
+            .section-title { font-size: 1.5rem; margin-bottom: 0.5rem !important; }
+            section#summary, section#institutional {
+                page-break-before: auto !important;
+                margin-bottom: 1rem !important;
+            }
+            .p-6.bg-white { padding: 1rem !important; }
+            .metric-card { padding: 0.5rem !important; }
+            .metric-card p:first-child { font-size: 0.7rem; }
+            .metric-card p:last-child { font-size: 1.5rem; }
+            .grid { gap: 1rem !important; }
+            a {
+                text-decoration: none;
+                color: inherit;
+            }
+            .text-\[\#b38f50\] {
+                color: #b38f50 !important;
+            }
+            h1, h2, h3, h4, p {
+                color: #000 !important;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container mx-auto px-4 lg:px-8 py-8 max-w-5xl">
+        
+        <div class="print-first-page">
+            <header class="aquila-header text-center pb-6 mb-8">
+                <div class="flex justify-center items-center mb-4">
+                    <img src="https://i.ibb.co/FkdcKZPd/logo.png" alt="Aquila Research Logo" class="h-16 w-16 rounded-full object-cover mr-4">
+                    <h1 class="aquila-title text-4xl md:text-5xl">Aquila Research</h1>
+                </div>
+                <h2 class="text-xl md:text-2xl report-title font-semibold">솔라나 생태계 심층 분석: <span class="text-[#b38f50]">기관 채택, 기술적 전망 및 고베타 투자 기회</span></h2>
+                <div class="flex justify-center items-center space-x-4 mt-2 text-sm text-gray-500">
+                    <span>발행일: 2025년 8월 28일</span>
+                    <span>|</span>
+                    <span>Research Vol. 001</span>
+                </div>
+            </header>
+
+            <main>
+                <section id="summary" class="mb-16 scroll-mt-24">
+                    <h2 class="section-title text-3xl mb-6">Executive Summary</h2>
+                    <div class="p-6 bg-white rounded-lg shadow-sm border">
+                        <p class="text-base leading-relaxed text-gray-800">본 보고서는 솔라나(SOL) 생태계에 대한 종합적인 분석을 제공합니다. 최근 나스닥 상장사 Sharps Technology(STSS)의 대규모 SOL 투자 사례는 블록체인 기술에 대한 기관의 관심이 실질적인 자본 투입으로 이어지고 있음을 보여주는 중요한 신호입니다. 기술적으로 SOL은 주요 지지선에서 성공적으로 반등하며 중기적 상승 추세를 유지하고 있어 추가 상승 가능성이 높은 상황입니다.</p>
+                        <p class="text-base leading-relaxed text-gray-800 mt-4">이러한 거시적, 기술적 강세 환경 속에서 솔라나 생태계 내 JUP, JTO와 같은 핵심 디파이 프로토콜과 WIF, BONK 등 밈 코인은 SOL 대비 높은 베타(변동성)를 보이며 초과 수익 기회를 제공합니다. 또한, SOL을 직접 보유하거나 관련 ETF에 투자하는 상장 기업들은 투자자들에게 전통 시장을 통한 간접 투자 경로를 열어주고 있습니다. 결론적으로, 솔라나 생태계는 다각적인 투자 기회를 제공하고 있으나, 각 자산의 높은 변동성과 밸류에이션 희석 위험을 충분히 인지하고 신중하게 접근할 것을 권고합니다.</p>
+                    </div>
+                </section>
+
+                <section id="institutional" class="mb-16 scroll-mt-24">
+                    <h2 class="section-title text-3xl mb-6">Institutional Signal: Sharps Technology (STSS)</h2>
+                    <div class="grid md:grid-cols-5 gap-8">
+                        <div class="md:col-span-3 p-6 bg-white rounded-lg shadow-sm border">
+                            <h3 class="font-semibold text-xl text-gray-800 mb-3">나스닥 상장사의 파격적인 솔라나 투자</h3>
+                            <p class="text-gray-700 mb-4">주로 의료 기기 사업으로 알려진 나스닥 상장사 Sharps Technology(STSS)는 최근 디지털 자산 투자사 Pantera, ParaFi 등의 참여로 4억 달러 규모의 사모 자금(PIPE) 조달을 발표했습니다. 이 자금은 세계 최대 규모의 솔라나(SOL) 기업 국고(Treasury) 구축에 사용될 계획입니다.</p>
+                            <p class="text-gray-700 mb-4">또한, 샤프스는 솔라나 재단과의 양해각서(LOI)를 통해 5천만 달러 상당의 SOL을 시장가보다 15% 할인된 가격에 매입하기로 했습니다. 이는 전통 기업이 특정 블록체인 자산을 핵심 전략으로 채택하는 이례적인 사례로, 기관 투자자들의 관심이 솔라나로 집중되고 있음을 명확히 보여줍니다.</p>
+                            <h4 class="font-semibold text-lg text-gray-800 mt-6 mb-2">시장 반응 및 시사점</h4>
+                            <p class="text-gray-700">이 소식이 발표된 직후 STSS 주가는 장중 70%까지 폭등하며 시장의 폭발적인 반응을 이끌어냈습니다. 그러나 이러한 디지털 자산 트레저리(DATs) 기업은 보유 암호화폐 가치 대비 주가에 할증(프리미엄)이 붙을 수 있어, 암호화폐 시장 조정 시 주가 변동성이 극대화될 위험이 있습니다. 투자자는 SOL 가격 추이와 함께 STSS의 자금 조달 조건 및 지분 희석 가능성을 면밀히 주시해야 합니다.</p>
+                        </div>
+                        <div class="md:col-span-2 space-y-4">
+                            <div class="metric-card rounded-lg p-4 shadow-sm">
+                                <p class="text-gray-600 text-sm font-medium">PIPE Funding</p>
+                                <p class="text-3xl font-bold text-gray-900">$400M</p>
+                            </div>
+                            <div class="metric-card rounded-lg p-4 shadow-sm">
+                                <p class="text-gray-600 text-sm font-medium">STSS Intraday Peak</p>
+                                <p class="text-3xl font-bold text-green-600">+70%</p>
+                            </div>
+                            <div class="metric-card rounded-lg p-4 shadow-sm">
+                                <p class="text-gray-600 text-sm font-medium">SOL Purchase (Discounted)</p>
+                                <p class="text-3xl font-bold text-gray-900">$50M</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            
+            <nav class="sticky top-0 bg-[#f8f9fa]/90 backdrop-blur-md z-20 mb-12 border-b">
+                <div class="max-w-6xl mx-auto flex justify-center items-center space-x-4 sm:space-x-8 text-sm sm:text-base">
+                    <a href="#summary" class="nav-link active-nav">Executive Summary</a>
+                    <a href="#institutional" class="nav-link">Institutional Signal</a>
+                    <a href="#technicals" class="nav-link">Technical Outlook</a>
+                    <a href="#ecosystem" class="nav-link">Ecosystem Coins</a>
+                    <a href="#equities" class="nav-link">Public Equities & ETFs</a>
+                </div>
+            </nav>
+
+            <main>
+                <section id="technicals" class="mb-16 scroll-mt-24">
+                    <h2 class="section-title text-3xl mb-6">Solana (SOL) Technical Outlook</h2>
+                    <div class="w-full">
+                        <div class="chart-container mb-6">
+                            <img src="chart/sol250828.png" alt="Solana Technical Chart" class="w-full h-auto rounded-md">
+                        </div>
+                        <div class="p-6 bg-white rounded-lg shadow-sm border">
+                            <h3 class="font-semibold text-xl text-gray-800 mb-4">중기 상승 추세 유효</h3>
+                            <ul class="space-y-3 text-gray-700">
+                                <li><strong>추세 및 패턴:</strong> 50일 및 100일 지수이동평균(EMA)이 모두 상승 중이며, 50일선($179) 위에서 견고한 상승 추세를 유지하고 있습니다.</li>
+                                <li><strong>주요 지지선:</strong> 1차 지지선은 50일 EMA가 위치한 <strong>$179</strong> 부근입니다. 이 구간이 무너질 경우, 장기 지지선인 200일 이동평균선 <strong>$157</strong> 부근까지 조정을 염두에 두어야 합니다.</li>
+                                <li><strong>주요 저항선:</strong> 단기 저항은 <strong>$230</strong>이며, 이 가격대를 성공적으로 돌파할 경우 사상 최고가인 <strong>$295.8</strong>를 향한 상승을 시도할 수 있습니다.</li>
+                                <li><strong>모멘텀 지표:</strong> 일봉 RSI는 62로 과매수 구간에 진입하지 않은 채 상승 모멘텀을 시사하며, MACD 역시 골든크로스를 형성하여 강세 흐름을 뒷받침하고 있습니다.</li>
+                            </ul>
+                            <p class="mt-6 p-4 bg-gray-50 rounded-md border text-sm"><strong>투자 전략:</strong> 현재 추세는 상방으로 유효합니다. 단기 조정 시 <strong>$179 ~ $185</strong> 구간에서 분할 매수하는 전략이 유효하며, 신규 진입은 주요 저항선인 <strong>$230</strong> 돌파 여부를 확인한 후 고려하는 것이 바람직합니다.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="ecosystem" class="mb-16 scroll-mt-24">
+                     <h2 class="section-title text-3xl mb-6">High-Beta Ecosystem Coins</h2>
+                     <p class="max-w-4xl mx-auto text-center text-gray-600 mb-10">솔라나 생태계의 성장에 따라 SOL보다 높은 변동성을 보이며 초과 수익을 기대할 수 있는 주요 프로젝트들입니다. 각 자산은 고유한 위험-수익 프로필을 가지므로, 아래 필터를 통해 관심 분야를 탐색하고 매트릭스에서 상대적 포지션을 확인하십시오.</p>
+                    <div id="category-buttons" class="max-w-4xl mx-auto p-4 bg-white rounded-lg shadow-sm border mb-12">
+                         <div class="flex flex-wrap justify-center gap-2">
+                            <button data-category="all" class="category-btn px-4 py-2 text-sm font-semibold rounded-full bg-gray-800 text-white">ALL</button>
+                            <button data-category="LSD" class="category-btn px-4 py-2 text-sm font-semibold rounded-full bg-gray-200 text-gray-800">LSD</button>
+                            <button data-category="DEX & DeFi" class="category-btn px-4 py-2 text-sm font-semibold rounded-full bg-gray-200 text-gray-800">DEX & DeFi</button>
+                            <button data-category="Meme" class="category-btn px-4 py-2 text-sm font-semibold rounded-full bg-gray-200 text-gray-800">Meme</button>
+                            <button data-category="Infrastructure" class="category-btn px-4 py-2 text-sm font-semibold rounded-full bg-gray-200 text-gray-800">Infrastructure</button>
+                        </div>
+                    </div>
+
+                    <div class="chart-container mb-12">
+                        <div class="h-[450px] max-h-[60vh] relative">
+                            <canvas id="riskMatrixChart"></canvas>
+                        </div>
+                        <div id="chart-legend" class="mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-2 text-xs"></div>
+                    </div>
+
+                    <div id="coin-details-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    </div>
+                </section>
+
+                <section id="equities" class="scroll-mt-24">
+                    <h2 class="section-title text-3xl mb-6">Public Market Exposure: Equities & ETFs</h2>
+                    <p class="max-w-4xl mx-auto text-center text-gray-600 mb-10">전통 금융 시장을 통해 솔라나 생태계에 간접적으로 투자할 수 있는 주요 상장 기업 및 ETF 목록입니다. 이들은 SOL 가격 변동과 다양한 수준의 상관관계를 가지며, 규제된 환경 내에서 투자 대안을 제공합니다.</p>
+                    <div class="bg-white rounded-lg shadow-sm border overflow-x-auto">
+                        <table class="w-full text-sm text-left text-gray-500">
+                            <thead class="table-header text-xs uppercase">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">종목 (티커)</th>
+                                    <th scope="col" class="px-6 py-3">분야</th>
+                                    <th scope="col" class="px-6 py-3">SOL 연동 요인 및 전망</th>
+                                </tr>
+                            </thead>
+                            <tbody id="equities-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                     <p class="mt-6 p-4 bg-white rounded-md border text-sm"><strong>투자 관점:</strong> 솔라나 테마에 집중 투자하려면 SOL을 직접 보유하거나 SOL 기반 트레저리 주식(DFDV, HODL, UPXI) 또는 SOL ETF(ARKF/ARKW, SOLZ/SOLQ)를 고려할 수 있습니다. 이들은 SOL 가격과 매우 강하게 연동되지만, 변동성이 크므로 분산 투자가 필수적입니다. 암호화폐 거래소나 투자은행은 시장 전반의 활황에 수혜를 입는 종목으로, 규제 리스크를 함께 고려해야 합니다.</p>
+                     <footer class="disclaimer-print text-center hidden">
+                        <p><strong>투자 유의사항 (Disclaimer):</strong> 본 보고서는 정보 제공을 목적으로 작성되었으며, 특정 자산에 대한 투자 권유나 추천이 아닙니다. 디지털 자산 투자는 높은 변동성과 원금 손실의 위험을 수반합니다. 투자 결정은 본인의 판단과 책임 하에 이루어져야 하며, 필요한 경우 전문가의 조언을 구하시기 바랍니다. Aquila Research는 본 보고서의 정보에 기반한 투자 결과에 대해 어떠한 법적 책임도 지지 않습니다.</p>
+                     </footer>
+                </section>
+                
+                <footer class="disclaimer text-center">
+                    <p><strong>투자 유의사항 (Disclaimer):</strong> 본 보고서는 정보 제공을 목적으로 작성되었으며, 특정 자산에 대한 투자 권유나 추천이 아닙니다. 디지털 자산 투자는 높은 변동성과 원금 손실의 위험을 수반합니다. 투자 결정은 본인의 판단과 책임 하에 이루어져야 하며, 필요한 경우 전문가의 조언을 구하시기 바랍니다. Aquila Research는 본 보고서의 정보에 기반한 투자 결과에 대해 어떠한 법적 책임도 지지 않습니다.</p>
+                </footer>
+            </main>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const coinData = [
+                {
+                    ticker: 'JTO', name: 'Jito', category: 'LSD', ethEquivalent: 'Lido (LDO)',
+                    description: '솔라나의 선도적인 유동성 스테이킹 프로토콜로, MEV(최대 추출 가능 가치) 보상을 통합하여 차별화된 수익률을 제공합니다. SOL 보유자는 Jito를 통해 유동성을 유지하면서 네트워크 보안에 기여하고 추가 수익을 창출할 수 있어, 생태계의 핵심적인 수익 창출 자산으로 자리매김하고 있습니다.',
+                    riskProfile: '고베타 / 강력한 펀더멘털', risk: 3, beta: 4, marketCap: 1.96
+                },
+                {
+                    ticker: 'JUP', name: 'Jupiter', category: 'DEX Aggregator', ethEquivalent: '1inch (1INCH)',
+                    description: '솔라나의 파편화된 DEX 유동성을 하나로 통합하여 사용자에게 최적의 거래 경로를 제공하는 핵심 애그리게이터입니다. 생태계의 모든 거래 활동이 Jupiter를 거쳐 가는 만큼, 솔라나 DeFi의 성장을 가장 직접적으로 반영하는 지표 자산으로 평가됩니다.',
+                    riskProfile: '고베타 / 강력한 펀더멘털', risk: 3, beta: 4, marketCap: 1.51
+                },
+                {
+                    ticker: 'RAY', name: 'Raydium', category: 'AMM / DEX', ethEquivalent: 'Uniswap (UNI)',
+                    description: '솔라나의 대표적인 자동화 마켓 메이커(AMM) DEX이자 신규 프로젝트의 유동성이 처음 공급되는 런치패드 플랫폼입니다. 생태계의 새로운 활력이 Raydium을 통해 발현되는 경우가 많아, 시장의 선행 지표 역할을 하기도 합니다.',
+                    riskProfile: '고베타 / 강력한 펀더멘털', risk: 3.5, beta: 4, marketCap: 0.96
+                },
+                 {
+                    ticker: 'ORCA', name: 'Orca', category: 'AMM / DEX', ethEquivalent: 'Uniswap (UNI)',
+                    description: '사용자 친화적인 경험(UX)에 중점을 둔 DEX로, 특히 자본 효율성을 극대화한 \'Whirlpools\' 모델이 강점입니다. 직관적인 인터페이스를 통해 DeFi 초심자부터 숙련된 투자자까지 폭넓은 사용자층을 확보하고 있습니다.',
+                    riskProfile: '인프라 베타 / 상대적 저위험', risk: 2.5, beta: 3, marketCap: 0.14
+                },
+                {
+                    ticker: 'DRIFT', name: 'Drift Protocol', category: 'Derivatives DEX', ethEquivalent: 'dYdX / GMX',
+                    description: '솔라나의 낮은 지연 시간(low-latency)을 활용하여 중앙화 거래소 수준의 경험을 제공하는 온체인 파생상품 프로토콜입니다. 시장 변동성이 확대될 때 레버리지 거래 수요가 증가하며, 이는 Drift의 거래량과 가치 상승으로 이어질 수 있습니다.',
+                    riskProfile: '고베타 / 강력한 펀더멘털', risk: 4, beta: 4.5, marketCap: 0.21
+                },
+                {
+                    ticker: 'KMNO', name: 'Kamino', category: 'DeFi Suite', ethEquivalent: 'Aave / Compound',
+                    description: '대출, 차입, 유동성 제공 등 파편화된 DeFi 서비스를 하나로 통합한 올인원 플랫폼입니다. 복잡한 이자 농사 전략을 자동화하여 사용자의 편의성을 극대화하고, 자산 활용도를 높이는 데 중점을 둡니다.',
+                    riskProfile: '고베타 / 강력한 펀더멘털', risk: 3.5, beta: 4, marketCap: 0.1
+                },
+                {
+                    ticker: 'WIF', name: 'dogwifhat', category: 'Meme', ethEquivalent: 'Shiba Inu (SHIB)',
+                    description: '솔라나 생태계의 문화적 현상이자 개인 투자자들의 심리를 가장 순수하게 반영하는 자산입니다. 펀더멘털보다는 커뮤니티의 관심과 시장의 모멘텀에 따라 움직이며, 생태계의 투기적 활력을 측정하는 바로미터 역할을 합니다.',
+                    riskProfile: '고베타 / 고위험 (투기적)', risk: 5, beta: 5, marketCap: 0.81
+                },
+                {
+                    ticker: 'BONK', name: 'Bonk', category: 'Meme', ethEquivalent: 'Dogecoin (DOGE)',
+                    description: '솔라나 최초의 커뮤니티 코인으로 시작하여, 현재는 광범위한 생태계 통합을 통해 실질적인 유틸리티를 구축하고 있습니다. 단순한 밈을 넘어 솔라나 네트워크의 사회적, 경제적 활동에 깊숙이 관여하려는 시도가 특징입니다.',
+                    riskProfile: '고베타 / 고위험 (투기적)', risk: 4.5, beta: 5, marketCap: 1.72
+                },
+                {
+                    ticker: 'W', name: 'Wormhole', category: 'Infrastructure', ethEquivalent: null,
+                    description: '솔라나와 다른 블록체인 네트워크 간의 상호운용성을 지원하는 핵심 인프라입니다. 이 프로토콜은 자산과 데이터의 원활한 크로스체인 전송을 가능하게 하여, 솔라나 생태계의 확장성과 외부 유동성 유입에 필수적인 역할을 담당합니다.',
+                    riskProfile: '인프라 베타 / 상대적 저위험', risk: 2, beta: 3.5, marketCap: 0.35
+                },
+                {
+                    ticker: 'MPLX', name: 'Metaplex', category: 'Infrastructure', ethEquivalent: null,
+                    description: '솔라나의 모든 NFT가 발행되고 거래되는 기술적 표준을 제공하는 foundational layer입니다. NFT 시장의 성장은 Metaplex 프로토콜의 채택 및 가치와 직접적으로 연결되어 있습니다.',
+                    riskProfile: '인프라 베타 / 상대적 저위험', risk: 2.5, beta: 3.5, marketCap: 0.16
+                },
+                {
+                    ticker: 'PYTH', name: 'Pyth Network', category: 'Infrastructure', ethEquivalent: 'Chainlink (LINK)',
+                    description: '신뢰할 수 있는 실시간 시장 데이터를 온체인에 제공하는 오라클 네트워크입니다. 빠르고 정확한 데이터 피드는 모든 DeFi 프로토콜이 안정적으로 운영되기 위한 전제 조건이며, Pyth는 솔라나 생태계의 금융 인프라에서 핵심적인 역할을 수행합니다.',
+                    riskProfile: '인프라 베타 / 상대적 저위험', risk: 2, beta: 3, marketCap: 0.66
+                }
+            ];
+            
+            const equitiesData = [
+                { ticker: 'DFDV', category: '디지털자산 트레저리', analysis: 'SOL을 대량 축적하는 기업. 최근 17,760 SOL 추가 매수 발표. SOL 가격과 직접 연동되나 지분 희석 우려 존재.' },
+                { ticker: 'HODL', category: '디지털자산 트레저리', analysis: '캐나다 기업으로 ‘SOL 보유 전략’을 표방. 상장사 중 SOL 집중 보유 비중이 높아 SOL 가격 변동에 매우 민감.' },
+                { ticker: 'UPXI', category: '디지털자산 트레저리', analysis: 'SOL 축적 및 스테이킹 수익 창출 중심 전략 기업. SOL 가격 상승 시 포트폴리오 가치가 크게 상승.' },
+                { ticker: 'COIN', category: '암호화폐 거래소', analysis: '세계적 거래소로 SOL 거래 지원. 암호화폐 시장 전반의 강세 시 수혜. SOL과 직접 연동성은 낮으나 시장 모멘텀과 동행.' },
+                { ticker: 'GLXY', category: '암호화폐 투자은행', analysis: '암호화폐 투자 및 자산 운용사. SOL 관련 펀드 운용이나 파생상품 제공 가능. 생태계 성장 시 간접 수혜 기대.' },
+                { ticker: 'ARKF / ARKW', category: 'ETF (미국)', analysis: '미국 최초로 SOL에 노출된 ETF. 3iQ의 솔라나 스테이킹 ETF(SOLQ)에 투자하여 SOL 비중 보유. SOL 가격과 연동.' },
+                { ticker: 'SOLZ', category: 'ETF (영국)', analysis: 'SOL 선물에 1배 노출되는 솔라나 ETF. SOL 상승 시 직접적인 수익 추구 가능.' },
+                { ticker: 'SOLQ', category: 'ETF (캐나다)', analysis: 'SOL 가격 변동과 스테이킹 보상 수익을 함께 추구하는 ETF. ARK 펀드의 투자로 주목받음.' }
+            ];
+
+            const coinGrid = document.getElementById('coin-details-grid');
+            
+            function renderCoinCards(filter = 'all') {
+                coinGrid.innerHTML = '';
+                const categoryMap = {
+                    'LSD': 'LSD',
+                    'DEX & DeFi': ['DEX Aggregator', 'AMM / DEX', 'Derivatives DEX', 'DeFi Suite'],
+                    'Meme': 'Meme',
+                    'Infrastructure': 'Infrastructure'
+                };
+
+                const filteredData = filter === 'all' 
+                    ? coinData 
+                    : coinData.filter(c => {
+                        const filterValues = categoryMap[filter];
+                        return Array.isArray(filterValues) ? filterValues.includes(c.category) : c.category === filterValues;
+                    });
+
+
+                filteredData.forEach(coin => {
+                    const card = document.createElement('div');
+                    card.className = 'card rounded-lg p-5 flex flex-col';
+                    
+                    let ethEquivalentHTML = '';
+                    if (coin.ethEquivalent) {
+                        ethEquivalentHTML = `
+                            <div class="text-right">
+                                <p class="text-xs text-gray-500">ETH Equivalent</p>
+                                <p class="font-semibold text-gray-700 text-sm">${coin.ethEquivalent}</p>
+                            </div>`;
+                    }
+
+                    card.innerHTML = `
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-800">${coin.name} (${coin.ticker})</h3>
+                                <p class="text-xs font-semibold text-yellow-700">${coin.category}</p>
+                            </div>
+                            <div class="flex-shrink-0 ml-4">
+                                ${ethEquivalentHTML}
+                            </div>
+                        </div>
+                        <p class="text-gray-600 text-sm leading-relaxed mb-4 flex-grow">${coin.description}</p>
+                        <div class="mt-auto pt-3 border-t border-gray-100">
+                            <p class="text-xs font-medium text-gray-500">Risk Profile</p>
+                            <p class="font-semibold text-gray-800 text-sm">${coin.riskProfile}</p>
+                        </div>
+                    `;
+                    coinGrid.appendChild(card);
+                });
+            }
+
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const category = btn.dataset.category;
+                    renderCoinCards(category);
+                    document.querySelectorAll('.category-btn').forEach(b => {
+                        b.classList.remove('bg-gray-800', 'text-white');
+                        b.classList.add('bg-gray-200', 'text-gray-800');
+                    });
+                    btn.classList.add('bg-gray-800', 'text-white');
+                    btn.classList.remove('bg-gray-200', 'text-gray-800');
+                });
+            });
+
+            const equitiesTableBody = document.getElementById('equities-table-body');
+            equitiesData.forEach(eq => {
+                const row = document.createElement('tr');
+                row.className = 'bg-white border-b hover:bg-gray-50';
+                row.innerHTML = `
+                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">${eq.ticker}</td>
+                    <td class="px-6 py-4">${eq.category}</td>
+                    <td class="px-6 py-4">${eq.analysis}</td>
+                `;
+                equitiesTableBody.appendChild(row);
+            });
+
+            renderCoinCards('all');
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('section');
+            window.addEventListener('scroll', () => {
+                let current = 'summary';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 100) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active-nav');
+                    if (link.getAttribute('href').substring(1) === current) {
+                        link.classList.add('active-nav');
+                    }
+                });
+            });
+
+            navLinks.forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            const riskMatrixCtx = document.getElementById('riskMatrixChart').getContext('2d');
+            const legendContainer = document.getElementById('chart-legend');
+            const backgroundColors = coinData.map(() => `rgba(${Math.floor(Math.random() * 100) + 100}, ${Math.floor(Math.random() * 100) + 100}, ${Math.floor(Math.random() * 100) + 155}, 0.8)`);
+            
+            legendContainer.innerHTML = '';
+            coinData.forEach((coin, index) => {
+                const legendItem = document.createElement('div');
+                legendItem.className = 'flex items-center';
+                legendItem.innerHTML = `
+                    <span class="h-3 w-3 rounded-full mr-2" style="background-color: ${backgroundColors[index]}"></span>
+                    <span>${coin.name} (${coin.ticker})</span>
+                `;
+                legendContainer.appendChild(legendItem);
+            });
+
+            new Chart(riskMatrixCtx, {
+                type: 'bubble',
+                data: {
+                    datasets: coinData.map((coin, index) => ({
+                        label: coin.name,
+                        data: [{ x: coin.risk, y: coin.beta, r: coin.marketCap * 8 + 5 }],
+                        backgroundColor: backgroundColors[index]
+                    }))
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        title: { display: true, text: '위험-수익 프로필 매트릭스', font: { size: 16 } },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const coin = coinData[context.datasetIndex];
+                                    return `${coin.name} (${coin.ticker}): 시총 $${coin.marketCap}B`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: { title: { display: true, text: '위험도 (투기성) →', font: { size: 12 } }, min: 1, max: 5.5 },
+                        y: { title: { display: true, text: '잠재적 베타 (수익률 변동성) →', font: { size: 12 } }, min: 2, max: 5.5 }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

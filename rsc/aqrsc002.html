@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aquila Research: Sharps Technology(STSS) 심층 분석</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Application Structure Plan: This is a professional research report on Sharps Technology (STSS), structured as a single-page application. The information architecture follows a logical narrative: starting with a high-level Executive Summary, it first grounds the analysis in the company's Core Business (medical devices), then details the pivot via its Digital Transition (Solana strategy), compares STSS to peers in the Competitive Landscape, and concludes with a forward-looking Valuation & Risk Analysis. A sticky navigation bar allows users to either follow the narrative or jump to specific sections of interest. This structure was chosen to clearly delineate the two disparate parts of STSS's business before evaluating their combined potential and risks. -->
+    <!-- Visualization & Content Choices:
+        - Report Info: Key medical device contracts. -> Goal: Inform & Empathize. -> Viz/Method: Key Metric Cards (HTML/CSS). -> Interaction: Static display. -> Justification: Quickly conveys the most impactful numbers (contract value, duration) without chart complexity.
+        - Report Info: The Solana PIPE deal. -> Goal: Explain. -> Viz/Method: Key Metric Cards (HTML/CSS). -> Interaction: Static display. -> Justification: Highlights the core figures of the pivotal financial transaction, such as the deal size and assets acquired.
+        - Report Info: Comparison with MSTR, SBET, BMNR. -> Goal: Compare & Organize. -> Viz/Method: Interactive HTML Table. -> Interaction: Hover highlights rows. -> Justification: A table is the most effective format for comparing structured data across multiple entities (Asset, Strategy, Leadership, NAV Premium). -> Library: Vanilla JS + Tailwind CSS.
+        - Report Info: Valuation Scenarios. -> Goal: Analyze. -> Viz/Method: Detailed text descriptions within structured cards. -> Interaction: None. -> Justification: Valuation scenarios require nuanced explanation that is better suited to text than a chart, allowing for clear articulation of assumptions and outcomes.
+    -->
+    <style>
+        body {
+            font-family: 'Poppins', 'Noto Sans KR', sans-serif;
+            background-color: #f8f9fa;
+            color: #212529;
+            scroll-behavior: smooth;
+        }
+        .aquila-header {
+            border-bottom: 2px solid #e9ecef;
+        }
+        .aquila-title {
+            font-weight: 700;
+            color: #000;
+        }
+        .report-title {
+            color: #3a3a3a;
+        }
+        .section-title {
+            font-weight: 600;
+            color: #343a40;
+            border-bottom: 3px solid #e0c48f;
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+        .active-nav {
+            color: #b38f50;
+            font-weight: 600;
+            border-bottom: 2px solid #b38f50;
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+        .nav-link:hover {
+            color: #b38f50;
+        }
+        .card {
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0.5rem 1rem rgba(0,0,0,.1);
+        }
+        .metric-card {
+             background: linear-gradient(145deg, #ffffff, #e6e6e6);
+             border-left: 5px solid #e0c48f;
+        }
+        .table-header {
+            background-color: #343a40;
+            color: #ffffff;
+        }
+        .disclaimer {
+            font-size: 0.75rem;
+            color: #6c757d;
+            border-top: 1px solid #dee2e6;
+            padding-top: 1.5rem;
+            margin-top: 3rem;
+        }
+        .header-link {
+            text-decoration: none;
+            transition: transform 0.3s ease;
+            display: inline-block; /* Makes the container clickable */
+        }
+        .header-link:hover {
+            transform: scale(1.03); /* Slight zoom effect on hover */
+        }
+        @media print {
+            .page-break {
+                page-break-before: always;
+            }
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto px-4 lg:px-8 py-8 max-w-4xl">
+        
+        <header class="aquila-header text-center pb-6 mb-8">
+            <a href="https://aqresearch.com" class="header-link">
+                <div class="flex justify-center items-center mb-4">
+                    <img src="https://i.ibb.co/FkdcKZPd/logo.png" alt="Aquila Research Logo" class="h-16 w-16 rounded-full object-cover mr-4">
+                    <h1 class="aquila-title text-4xl md:text-5xl">Aquila Research</h1>
+                </div>
+            </a>
+            <h2 class="text-2xl md:text-3xl report-title font-semibold leading-tight">
+                <span class="text-sky-700">Sharps Technology(STSS)</span> 심층 분석
+                <br>
+                <span class="text-[#b38f50] font-bold">의료기기 본업과 솔라나 재무 전략의 이중성</span>
+            </h2>
+            <div class="flex justify-center items-center space-x-4 mt-2 text-sm text-gray-500">
+                <span>발행일: 2025년 9월 3일</span>
+                <span>|</span>
+                <span>Research Vol. 002</span>
+            </div>
+        </header>
+
+        <nav class="sticky top-0 bg-[#f8f9fa]/90 backdrop-blur-md z-20 mb-12 border-b no-print">
+            <div class="max-w-4xl mx-auto flex justify-center items-center flex-wrap space-x-4 sm:space-x-8 text-sm sm:text-base">
+                <a href="#summary" class="nav-link active-nav">Executive Summary</a>
+                <a href="#core-business" class="nav-link">핵심 사업</a>
+                <a href="#digital-transition" class="nav-link">디지털 전환</a>
+                <a href="#competitive-landscape" class="nav-link">경쟁 구도</a>
+                <a href="#valuation-risk" class="nav-link">가치평가 및 리스크</a>
+            </div>
+        </nav>
+
+        <main>
+            <section id="summary" class="mb-16 scroll-mt-24">
+                <h2 class="section-title text-3xl mb-6">Executive Summary</h2>
+                <div class="p-6 bg-white rounded-lg shadow-sm border space-y-4 text-base leading-relaxed text-gray-800">
+                    <p>Sharps Technology(NASDAQ: STSS)는 최근 의료기기 전문 기업이라는 본업에 더해 대규모 암호화폐(솔라나) 투자 전략을 도입하며 두 가지 얼굴을 갖게 되었습니다. 이 과감한 전략 변화로 STSS의 주가는 이제 본업의 성과보다 변동성 큰 암호화폐 시장의 흐름과 투자 심리에 더 민감하게 반응할 것으로 보입니다. STSS는 MicroStrategy(MSTR) 등 선례 기업들이 활용한 ‘암호화폐 대리 투자’ 전략을 따르고 있습니다.</p>
+                    <p>한편, STSS의 본업인 의료기기 사업은 자체적으로도 성장 잠재력이 큽니다. 특허받은 스마트 안전 주사기 제품군은 초저잔량(Ultra-Low Waste) 기능, 자동 수동적 안전장치, 재사용 방지 기능 등을 갖추고 FDA, WHO, CE 마크 등 승인을 획득했습니다. 특히 폴리머 소재의 사전충전형 주사기(PFS) 시장에 집중하여 Nephron 및 SoloGard 대규모 공급 계약을 성사시켰습니다. 이 계약들이 계획대로 이행된다면 STSS는 곧 상업적 매출을 창출하는 기업으로 탈바꿈할 것이나, 신규 제조 시설 가동, 대량 생산 안정화 등 실행 리스크를 극복해야 합니다. 더욱이 경영진은 이제 의료기기 생산과 4억 달러 규모 솔라나 투자 포트폴리오 관리라는 두 마리 토끼를 동시에 잡아야 하는 부담을 안고 있습니다.</p>
+                    <p>결론적으로 STSS는 솔라나 생태계에 대한 레버리지 투자 수단으로 기업 정체성을 재편했습니다. 앞으로의 주가 향방은 전적으로 솔라나(SOL) 가격 상승과 시장의 프리미엄 평가에 달려 있습니다. 이는 전통적인 가치투자나 성장투자 관점과는 거리가 멀며, 매우 높은 위험을 감수할 준비가 된 공격적 투자자에게만 어울리는 기회라고 할 수 있습니다.</p>
+                </div>
+            </section>
+
+            <section id="core-business" class="mb-16 scroll-mt-24 page-break">
+                <h2 class="section-title text-3xl mb-6">핵심 사업: 의료기기 사업의 잠재력과 위험</h2>
+                <div class="p-6 bg-white rounded-lg shadow-sm border space-y-6">
+                    <div>
+                        <h3 class="font-semibold text-xl text-gray-800 mb-3">1.1 제품 포트폴리오와 시장 환경</h3>
+                        <p class="text-gray-700 mb-4">Sharps Technology는 특허받은 스마트 안전 주사기 기술을 보유한 의료기기 및 의약품 포장 전문 기업입니다. 주력 제품은 SecureGard, SoloGard, Sharps Provensa 등으로, 약물 낭비를 최소화하는 초저잔량 설계, 자동 안전장치, 재사용 방지 기능을 갖추고 있으며 FDA, WHO, CE 마크 등 주요 규제 승인을 획득했습니다. STSS가 속한 글로벌 안전 주사기 시장은 2022년 약 84억 달러에서 2030년 약 154억 달러 규모로 연평균 7~8%의 꾸준한 성장이 예상되는 유망 분야입니다.</p>
+                        <p class="text-gray-700">STSS는 특히 사전충전형 주사기(PFS), 그 중에서도 기존 유리 주사기의 파손 위험, 화학 반응, 잔류물 문제 등 단점을 극복한 첨단 폴리머 소재 제품에 집중하고 있습니다. 이는 폭발적으로 성장 중인 바이오의약품 및 GLP-1 치료제 분야의 핵심 파트너로 자리매김하고, 최근 강화되는 중국산 주사기 규제의 반사 이익을 얻으려는 전략입니다.</p>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-xl text-gray-800 mb-3">1.2 사업의 두 기둥 – 핵심 계약들의 의미</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                             <div class="metric-card rounded-lg p-4 shadow-sm">
+                                <p class="text-gray-600 text-sm font-medium">Nephron 계약 (PFS)</p>
+                                <p class="text-2xl font-bold text-gray-900">$200M+ / 5년</p>
+                            </div>
+                            <div class="metric-card rounded-lg p-4 shadow-sm">
+                                <p class="text-gray-600 text-sm font-medium">SoloGard 계약</p>
+                                <p class="text-2xl font-bold text-gray-900">$50M / 5년</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 mb-4">현재 STSS 의료기기 사업의 성패는 두 가지 핵심 공급 계약에 달려 있습니다. 첫째, 미국 Nephron Pharmaceuticals와 5년간 2억 달러 규모의 PFS 제품 구매 약정을 체결, 북미 최초의 폴리머 PFS 생산 거점을 확보했습니다. 이 계약은 초기 '10년 4억 달러'에서 축소 조정되어 장기 수익 안정성에 대한 불확실성을 키웠지만, 실질적 수요처를 확보했다는 점에서 전략적 전환점이 되었습니다. 둘째, 미국의 한 대형 헬스케어 기업과 5년간 5천만 달러 규모의 SoloGard 주사기 공급 계약을 체결하여 2025년 6월 첫 상업적 매출을 기록했습니다. 이 계약은 회사의 상업화 역량을 입증하고 수익원을 다변화하는 중요한 의미를 갖습니다.</p>
+                    </div>
+                     <div>
+                        <h3 class="font-semibold text-xl text-gray-800 mb-3">1.3 재무적 생존 가능성과 실행의 어려움</h3>
+                        <p class="text-gray-700">과거 STSS는 매출 없이 지속적인 적자를 기록해 온 개발 단계 기업이었습니다. 두 핵심 계약이 계획대로 이행된다면 연 매출 약 4,500만 달러를 올리는 기업으로 탈바꿈하게 됩니다. 그러나 이 시나리오가 현실이 되려면 신규 공장 인수 및 가동, 대량 생산 안정화, 품질 관리 등 고도의 실행력이 요구됩니다. 직원 50여 명의 작은 조직이 이질적인 의료기기 사업과 4억 달러 규모 암호화폐 포트폴리오 관리라는 두 과업을 동시에 성공적으로 수행하는 데에는 상당한 운영 리스크가 따릅니다. 어느 한쪽의 문제가 다른 쪽으로 쉽게 번져 회사 전체를 위협할 수 있는 구조적 위험입니다.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="digital-transition" class="mb-16 scroll-mt-24">
+                <h2 class="section-title text-3xl mb-6">디지털 전환: 솔라나 재무 전략 분석</h2>
+                <div class="p-6 bg-white rounded-lg shadow-sm border space-y-6">
+                    <div>
+                        <h3 class="font-semibold text-xl text-gray-800 mb-3">2.1 변화의 시작 – 4억 달러 규모 사모투자 유치</h3>
+                        <div class="grid md:grid-cols-3 gap-6 mb-4">
+                            <div class="metric-card rounded-lg p-4 shadow-sm">
+                                <p class="text-gray-600 text-sm font-medium">PIPE Funding 규모</p>
+                                <p class="text-2xl font-bold text-gray-900">$400M+</p>
+                            </div>
+                            <div class="metric-card rounded-lg p-4 shadow-sm">
+                                <p class="text-gray-600 text-sm font-medium">초기 확보 SOL 물량</p>
+                                <p class="text-2xl font-bold text-green-600">2M+ SOL</p>
+                            </div>
+                            <div class="metric-card rounded-lg p-4 shadow-sm">
+                                <p class="text-gray-600 text-sm font-medium">워런트 행사가</p>
+                                <p class="text-2xl font-bold text-gray-900">$9.75</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-700">STSS는 2025년 8월, 4억 달러가 넘는 대규모 사모투자(PIPE) 유치를 발표하며 기업의 근본적인 변화를 시작했습니다. 투자자들이 현금 대신 솔라나(SOL) 토큰으로 투자금을 납입할 수 있도록 구조화되었으며, 이 거래로 회사는 200만 개 이상의 SOL을 확보했습니다. 시가총액 500만 달러에 불과했던 회사 규모를 감안하면, 이 거래의 본질은 대규모 SOL 보유자들에게 자신들의 암호화폐를 상장주식으로 바꿔 프리미엄을 누릴 통로를 제공하고, STSS의 본업은 이 금융작업을 위한 “상장사 껍데기” 역할을 한 것으로 볼 수 있습니다.</p>
+                    </div>
+                     <div>
+                        <h3 class="font-semibold text-xl text-gray-800 mb-3">2.2 왜 솔라나(Solana)인가?</h3>
+                        <p class="text-gray-700">STSS가 SOL을 선택한 표면적 이유는 솔라나의 빠른 속도와 성장성이지만, 실제로는 회사 자산의 거의 전부를 SOL 하나에 '올인 베팅'하는 극단적 집중 투자입니다. 솔라나 재단과의 '비구속적' 의향서(LOI)는 공식 파트너십처럼 포장되었으나 법적 효력이 없습니다. 이로써 STSS 주식은 더 이상 의료기기 사업 성과를 반영하는 증권이 아니라, SOL 가격에 연동된 레버리지 투자상품으로 변모했습니다.</p>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-xl text-gray-800 mb-3">2.3 새로운 리더십과 지배구조 변화</h3>
+                        <p class="text-gray-700">새 전략을 위해 솔라나 투자 전문가 앨리스 장(Alice Zhang)을 CIO로 영입했습니다. 이는 회사의 미래 방향이 디지털 자산 운용에 좌우될 것임을 보여주는 신호이자, 경영진 내부에 의료기기 사업과 암호화폐 투자라는 이질적인 두 권력 축이 생겼음을 의미합니다. 한편, 대규모 자본 거래로 인한 주주 지분 희석, 나스닥 상장 유지를 위한 주식 역분할, 그리고 현재 진행 중인 투자자 집단소송 등은 회사의 평판과 지배구조에 부담으로 작용하는 리스크 요인입니다.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="competitive-landscape" class="mb-16 scroll-mt-24">
+                <h2 class="section-title text-3xl mb-6">경쟁 구도: '암호화폐 대리 투자' 기업 비교</h2>
+                <p class="max-w-4xl mx-auto text-center text-gray-600 mb-10">'암호화폐 대리 투자' 전략은 선행 사례들이 존재합니다. STSS의 성공 가능성을 가늠하기 위해 비트코인 전략의 개척자 MicroStrategy(MSTR), 이더리움 전략의 선두주자 SharpLink(SBET) 및 BitMine(BMNR)과 비교 분석합니다.</p>
+                <div class="bg-white rounded-lg shadow-sm border overflow-x-auto">
+                    <table class="w-full text-sm text-left text-gray-500">
+                        <thead class="table-header text-xs uppercase">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">기업 (티커)</th>
+                                <th scope="col" class="px-6 py-3">주요 자산</th>
+                                <th scope="col" class="px-6 py-3">핵심 리더십</th>
+                                <th scope="col" class="px-6 py-3">시총 vs 자산가치 (NAV)</th>
+                                <th scope="col" class="px-6 py-3">전략적 특징</th>
+                            </tr>
+                        </thead>
+                        <tbody id="competitors-table-body">
+                            <!-- Rows will be dynamically inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+                 <div class="mt-6 p-4 bg-white rounded-md border text-sm">
+                    <p><strong>분석:</strong> 위 사례들을 종합하면, ‘암호화폐 대리 투자’ 전략의 성공에는 ①'껍데기' 역할의 소형 상장사, ②파격적인 사업 전환 선언, ③유명 인사 영입, ④공격적 자금 조달 및 매집이라는 공식이 존재합니다. STSS는 이 공식을 따르고 있으나, MSTR이나 SBET과 달리 선도자가 아닌 후발주자 위치에 있습니다. CIO인 앨리스 장은 솔라나 생태계 내 전문가이지만, 마이클 세일러(MSTR)나 조셉 루빈(SBET)처럼 시장 전체에 영향력을 행사하는 급은 아닙니다. 또한 비트코인이나 이더리움이 아닌 특정 플랫폼 코인(SOL)에 베팅하는 점도 차별점이자 리스크 요인입니다. 따라서 STSS가 선행 기업들과 동일한 수준의 프리미엄을 받을 수 있을지는 미지수입니다.</p>
+                </div>
+            </section>
+
+            <section id="valuation-risk" class="scroll-mt-24 page-break">
+                <h2 class="section-title text-3xl mb-6">가치평가 시나리오 및 리스크 분석</h2>
+                 <div class="grid md:grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                    <!-- Valuation Scenarios -->
+                    <div class="card rounded-lg p-5">
+                        <h3 class="text-xl font-bold text-green-700 mb-2">강세 시나리오 (High Premium)</h3>
+                        <p class="text-gray-600 text-sm">SOL 가격이 급등하고 STSS가 MSTR처럼 NAV 대비 높은 프리미엄을 인정받는 경우입니다. 특히, <strong>사모투자 물량과 워런트가 락업된 초기 단계에서는 유통 주식 수가 매우 적어 주가 변동성이 극대화될 수 있습니다.</strong> 만약 단기적으로 솔라나에 대한 폭발적인 시장 관심이 쏠린다면, 적은 유통 물량 대비 매수세가 집중되어 주가가 수 배를 넘어 수십 배까지 상승할 가능성도 잠재되어 있습니다. 이 시나리오는 암호화폐 시장의 강력한 불마켓과 STSS에 대한 투기적 수요가 결합될 때 현실화될 수 있습니다.</p>
+                    </div>
+                    <div class="card rounded-lg p-5">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">기본 시나리오 (Sum-of-the-Parts)</h3>
+                        <p class="text-gray-600 text-sm">의료기기 사업부의 미래 매출 가치와 보유 SOL의 현재 시장가치를 합산하여 내재가치를 추정합니다. 이 경우 주가는 현재 수준과 비슷하거나 약간 높은 보수적인 가치가 도출될 수 있으며, NAV 대비 프리미엄은 거의 없다고 가정합니다.</p>
+                    </div>
+                    <div class="card rounded-lg p-5">
+                        <h3 class="text-xl font-bold text-red-700 mb-2">약세 시나리오 (Discount & Dilution)</h3>
+                        <p class="text-gray-600 text-sm">암호화폐 시장 침체로 SOL 가치가 급락하고, 의료기기 사업 실행에 차질이 생기는 경우입니다. 워런트 행사와 추가 증자로 인한 매도 압력이 가중되어 주가는 NAV 이하로 할인 거래될 위험이 있습니다. 최악의 경우 상장 유지 요건을 위협받을 수 있습니다.</p>
+                    </div>
+                </div>
+
+                <div class="p-6 bg-white rounded-lg shadow-sm border">
+                    <h3 class="font-semibold text-xl text-gray-800 mb-4">종합 분석 및 최종 평가</h3>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="font-semibold text-lg text-green-700 mb-3">주요 기회 요인 (Opportunities)</h4>
+                            <ul class="space-y-3 text-gray-700 list-disc list-inside">
+                                <li><strong>폭발적 단기 상승 잠재력:</strong> 사모투자 및 워런트 물량의 락업 기간 동안 유통 주식 수가 극히 제한됩니다. 만약 솔라나 가격이 급등하며 시장의 관심이 집중될 경우, 적은 유통량으로 인해 주가가 단기간에 수십 배 폭등할 수 있는 '숏 스퀴즈'와 유사한 환경이 조성될 수 있습니다. 완전 희석 가치는 장기적 관점이며, 단기적 주가 상한선은 훨씬 높을 수 있습니다.</li>
+                                <li><strong>솔라나(SOL)에 대한 높은 레버리지:</strong> STSS 주식은 규제된 시장 내에서 솔라나의 성과에 직접적으로 베팅할 수 있는 가장 확실한 대리 투자 수단(Proxy) 중 하나로, SOL 가격 상승 시 더 높은 베타 수익률을 기대할 수 있습니다.</li>
+                                <li><strong>본업의 안정성 및 성장 가치:</strong> 의료기기 사업은 실제 계약에 기반한 매출을 창출하고 있어, 암호화폐 시장의 변동성에 대한 완충재 역할을 합니다. 본업의 성공은 회사에 대한 신뢰도를 높여 NAV 프리미엄을 정당화하는 근거가 될 수 있습니다.</li>
+                                <li><strong>추가 수익 창출(On-chain Yield):</strong> 보유한 SOL을 스테이킹하여 얻는 연 7% 내외의 추가 수익은 회사의 현금 흐름을 개선하고, 본업에 재투자하거나 주주 가치를 제고하는 데 사용될 수 있습니다.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg text-red-700 mb-3">핵심 리스크 요인 (Risks)</h4>
+                            <ul class="space-y-3 text-gray-700 list-disc list-inside">
+                                <li><strong>장기적인 가치 희석:</strong> 36개월에 걸쳐 행사될 수 있는 워런트와 추가 ATM 증자 계획은 잠재적 매도 압력으로 작용하며, 장기적으로 주주 가치를 희석시킬 수 있습니다. 단기 급등 후 차익 실현 물량이 출회될 가능성이 높습니다.</li>
+                                <li><strong>시장 리스크 및 집중 투자 위험:</strong> 회사 가치가 단일 자산(SOL)의 가격에 절대적으로 연동되어 있어, 암호화폐 시장 침체 시 막대한 손실을 피할 수 없습니다.</li>
+                                <li><strong>운영 및 전략적 리스크:</strong> 시너지가 없는 두 개의 이질적인 사업(의료기기, 암호화폐)을 소규모 조직이 동시에 운영하는 데 따르는 실행 리스크가 존재합니다.</li>
+                                <li><strong>법률 및 평판 리스크:</strong> 진행 중인 투자자 집단소송과 이해상충 가능성이 있는 홍보 활동은 시장 신뢰를 낮추는 요인입니다.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mt-8 p-4 bg-gray-50 rounded-md border text-sm">
+                        <p><strong>최종 평가:</strong> Sharps Technology는 '안정적인 의료기기 본업'과 '변동성 높은 솔라나 투자'라는 양면성을 지닌 독특한 투자처입니다. 단기적으로는 적은 유통 주식 수와 솔라나 불마켓이 결합될 경우, 완전 희석 가치를 초월하는 폭발적인 주가 상승을 기대할 수 있다는 점이 가장 큰 매력입니다. 장기적으로 대규모 물량 출회로 인한 가치 희석의 천장이 명확하지만, 그전까지 열려 있는 기회의 창이 존재합니다.</p>
+                        <p class="mt-2">결론적으로 STSS는 전통적인 가치 투자와는 거리가 멉니다. 이 주식은 솔라나 생태계의 폭발적 성장을 확신하며, 단기적 변동성을 활용해 높은 수익을 추구하고 장기적 희석 리스크를 감내할 수 있는 공격적인 투자자에게 적합한, 고위험 고수익(High-Risk, High-Reward)의 기회를 제공합니다.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <footer class="disclaimer text-center">
+                <p><strong>투자 유의사항 (Disclaimer):</strong> 본 보고서는 정보 제공을 목적으로 작성되었으며, 특정 자산에 대한 투자 권유나 추천이 아닙니다. 디지털 자산 투자는 높은 변동성과 원금 손실의 위험을 수반합니다. 투자 결정은 본인의 판단과 책임 하에 이루어져야 하며, 필요한 경우 전문가의 조언을 구하시기 바랍니다. Aquila Research는 본 보고서의 정보에 기반한 투자 결과에 대해 어떠한 법적 책임도 지지 않습니다.</p>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const competitorsData = [
+                { ticker: 'STSS', asset: 'Solana (SOL)', leadership: '앨리스 장 (Solana 투자자)', nav_comparison: '초기 프리미엄 기대감 반영', strategy: '후발주자, SOL 집중 투자 및 온체인 수익 창출 계획. 견실한 의료기기 본업 보유.' },
+                { ticker: 'MSTR', asset: 'Bitcoin (BTC)', leadership: '마이클 세일러 (BTC 맥시멀리스트)', nav_comparison: 'NAV 대비 높은 프리미엄 (1.3x+)', strategy: '선도주자, 부채 활용 BTC 지속 매입. 강력한 리더십 기반의 스토리텔링.' },
+                { ticker: 'SBET', asset: 'Ethereum (ETH)', leadership: '조셉 루빈 (ETH 공동창업자)', nav_comparison: 'NAV 대비 소폭 할인 (~0.8x)', strategy: 'ETH 전략 첫 사례, 저명인사 영입으로 신뢰 확보. 적극적 스테이킹으로 추가 수익 창출.' },
+                { ticker: 'BMNR', asset: 'Ethereum (ETH)', leadership: '톰 리 (시장 강세론자)', nav_comparison: 'NAV 대비 소폭 할인 (~0.9x)', strategy: '후발주자, 공격적인 ETH 매집 전략. 유명 애널리스트를 통한 시장 기대감 형성.' }
+            ];
+
+            const competitorsTableBody = document.getElementById('competitors-table-body');
+            competitorsData.forEach(comp => {
+                const row = document.createElement('tr');
+                row.className = 'bg-white border-b hover:bg-gray-50';
+                row.innerHTML = `
+                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">${comp.ticker}</td>
+                    <td class="px-6 py-4">${comp.asset}</td>
+                    <td class="px-6 py-4">${comp.leadership}</td>
+                    <td class="px-6 py-4">${comp.nav_comparison}</td>
+                    <td class="px-6 py-4">${comp.strategy}</td>
+                `;
+                competitorsTableBody.appendChild(row);
+            });
+
+            // Sticky nav active state on scroll
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('section');
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 150) { // Adjusted offset for better accuracy
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active-nav');
+                    const linkHref = link.getAttribute('href');
+                    if (linkHref && linkHref.startsWith('#') && linkHref.substring(1) === current) {
+                        link.classList.add('active-nav');
+                    }
+                });
+            });
+            
+             // Smooth scroll for nav links
+            navLinks.forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId && targetId.startsWith('#')) {
+                        e.preventDefault();
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            const headerOffset = 100; // Corresponds to sticky nav height + some padding
+                            const elementPosition = targetElement.getBoundingClientRect().top;
+                            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                            window.scrollTo({
+                                top: offsetPosition,
+                                behavior: "smooth"
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+

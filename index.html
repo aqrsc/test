@@ -117,17 +117,17 @@
   <header class="sticky top-0 z-50 bg-slate-900/80 backdrop-blur-lg border-b border-slate-700/80">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-20">
-        <a href="#home" class="flex items-center gap-3 group nav-main-link" aria-label="Aquila Research Home">
+        <a href="./index.html" class="flex items-center gap-3 group" aria-label="Aquila Research Home">
           <img src="https://aqcafe.mycafe24.com/img/logo.png" alt="Aquila Research Logo" class="h-10 w-10 rounded-full object-cover transition-transform group-hover:scale-110" />
         </a>
         <div class="flex items-center gap-6">
             <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
-              <a href="#about" class="text-slate-300 hover:text-sky-400 transition-colors nav-main-link" data-lang="nav_about">소개</a>
-              <a href="#method" class="text-slate-300 hover:text-sky-400 transition-colors nav-main-link" data-lang="nav_method">방법론</a>
-              <a href="#content" class="text-slate-300 hover:text-sky-400 transition-colors nav-main-link" data-lang="nav_content">콘텐츠</a>
-              <a href="#channels" class="text-slate-300 hover:text-sky-400 transition-colors nav-main-link" data-lang="nav_channels">채널</a>
-              <a href="#premium" class="text-slate-300 hover:text-sky-400 transition-colors nav-main-link" data-lang="nav_premium">프리미엄</a>
-              <a href="#research" class="text-slate-300 hover:text-sky-400 transition-colors nav-research-link" data-lang="nav_research">Research</a>
+              <a href="#about" class="text-slate-300 hover:text-sky-400 transition-colors" data-lang="nav_about">소개</a>
+              <a href="#method" class="text-slate-300 hover:text-sky-400 transition-colors" data-lang="nav_method">방법론</a>
+              <a href="#content" class="text-slate-300 hover:text-sky-400 transition-colors" data-lang="nav_content">콘텐츠</a>
+              <a href="./research.html" class="text-slate-300 hover:text-sky-400 transition-colors" data-lang="nav_research">Research</a>
+              <a href="#channels" class="text-slate-300 hover:text-sky-400 transition-colors" data-lang="nav_channels">채널</a>
+              <a href="#premium" class="text-slate-300 hover:text-sky-400 transition-colors" data-lang="nav_premium">프리미엄</a>
             </nav>
             <!-- Language Toggle -->
             <div class="hidden sm:flex items-center border-l border-slate-700 pl-6">
@@ -145,12 +145,12 @@
     <!-- Mobile Menu -->
     <div id="mobileNav" class="hidden md:hidden bg-slate-900 border-t border-slate-700">
       <nav class="px-4 py-4 space-y-2 text-sm font-medium">
-        <a href="#about" class="block py-2 px-3 rounded-md text-slate-300 hover:bg-slate-800 nav-main-link" data-lang="nav_about_mobile">소개</a>
-        <a href="#method" class="block py-2 px-3 rounded-md text-slate-300 hover:bg-slate-800 nav-main-link" data-lang="nav_method_mobile">방법론</a>
-        <a href="#content" class="block py-2 px-3 rounded-md text-slate-300 hover:bg-slate-800 nav-main-link" data-lang="nav_content_mobile">콘텐츠</a>
-        <a href="#channels" class="block py-2 px-3 rounded-md text-slate-300 hover:bg-slate-800 nav-main-link" data-lang="nav_channels_mobile">채널</a>
-        <a href="#premium" class="block py-2 px-3 rounded-md text-slate-300 hover:bg-slate-800 nav-main-link" data-lang="nav_premium_mobile">프리미엄</a>
-        <a href="#research" class="block py-2 px-3 rounded-md text-slate-300 hover:bg-slate-800 nav-research-link" data-lang="nav_research_mobile">Research</a>
+        <a href="#about" class="block py-2 px-3 rounded-md text-slate-300 hover:bg-slate-800" data-lang="nav_about_mobile">소개</a>
+        <a href="#method" class="block py-2 px-3 rounded-md text-slate-300 hover:bg-slate-800" data-lang="nav_method_mobile">방법론</a>
+        <a href="#content" class="block py-2 px-3 rounded-md text-slate-300 hover:bg-slate-800" data-lang="nav_content_mobile">콘텐츠</a>
+        <a href="./research.html" class="block py-2 px-3 rounded-md text-slate-300 hover:bg-slate-800" data-lang="nav_research_mobile">Research</a>
+        <a href="#channels" class="block py-2 px-3 rounded-md text-slate-300 hover:bg-slate-800" data-lang="nav_channels_mobile">채널</a>
+        <a href="#premium" class="block py-2 px-3 rounded-md text-slate-300 hover:bg-slate-800" data-lang="nav_premium_mobile">프리미엄</a>
         <div class="sm:hidden flex items-center justify-center pt-4 border-t border-slate-700">
             <button id="lang-ko-mobile" class="text-sm font-semibold text-white px-3 py-1">KO</button>
             <span class="text-slate-600">/</span>
@@ -161,7 +161,6 @@
   </header>
 
   <main>
-    <div id="main-content">
       <!-- Hero Section -->
       <section id="home" class="relative overflow-hidden h-screen flex items-center justify-center">
         <canvas id="particle-canvas"></canvas>
@@ -284,13 +283,13 @@
       </section>
       
       <!-- Research Link Section -->
-      <section id="research-link" class="py-20 sm:py-24">
+      <section id="research" class="py-20 sm:py-24">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="reveal rounded-2xl bg-slate-800/50 shadow-xl p-8 sm:p-12 text-center">
             <h2 class="text-3xl sm:text-4xl font-bold text-white font-kor" data-lang="research_link_title">Aquila Research</h2>
             <p class="mt-4 max-w-2xl mx-auto text-slate-300 font-kor" data-lang="research_link_desc">AI 기반의 데이터 분석과 시장의 핵심을 꿰뚫는 깊이 있는 인사이트를 만나보세요.</p>
             <div class="mt-8">
-              <a href="#research" class="nav-research-link group inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 bg-white text-slate-900 font-semibold shadow-lg hover:bg-slate-200 focus-visible:outline-none transition-transform hover:scale-105">
+              <a href="./research.html" class="group inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 bg-white text-slate-900 font-semibold shadow-lg hover:bg-slate-200 focus-visible:outline-none transition-transform hover:scale-105">
                 <span data-lang="research_link_cta">모든 리포트 보기</span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg>
               </a>
@@ -377,54 +376,6 @@
           </div>
         </div>
       </section>
-    </div>
-
-    <div id="research-content" class="hidden">
-      <section id="research" class="py-20 sm:py-24">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h1 class="text-4xl sm:text-5xl font-bold text-white" data-lang="research_page_title">Aquila Research</h1>
-                <p class="mt-4 max-w-2xl mx-auto text-slate-300 font-kor" data-lang="research_page_subtitle">AI 기반의 데이터 분석과 시장의 핵심을 꿰뚫는 깊이 있는 인사이트를 만나보세요.</p>
-            </div>
-            
-            <div class="space-y-8">
-              <!-- Report 1 -->
-              <div class="bg-slate-900 border border-slate-700 rounded-2xl p-6 sm:p-8 hover:border-sky-500 transition-colors duration-300">
-                  <div class="flex flex-col sm:flex-row justify-between sm:items-center">
-                      <div>
-                          <p class="text-sm text-slate-400" data-lang="report1_id">Research Vol. 001 · 2025년 8월 28일</p>
-                          <h2 class="text-xl sm:text-2xl font-bold text-white mt-1" data-lang="report1_title">솔라나 생태계 심층 분석</h2>
-                      </div>
-                      <div class="mt-4 sm:mt-0">
-                          <a href="https://aqcafe.mycafe24.com/rsc/aqrsc001.html" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center justify-center gap-2 rounded-lg px-5 py-2.5 bg-slate-800 text-slate-100 font-semibold shadow-lg hover:bg-sky-500 hover:text-white focus-visible:outline-none transition-colors duration-300">
-                            <span data-lang="view_report_cta">리포트 보기</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-                          </a>
-                      </div>
-                  </div>
-                  <p class="mt-4 text-slate-300 font-kor leading-relaxed" data-lang="report1_desc">기관 채택, 기술적 전망 및 고베타 투자 기회</p>
-              </div>
-  
-              <!-- Report 2 -->
-               <div class="bg-slate-900 border border-slate-700 rounded-2xl p-6 sm:p-8 hover:border-sky-500 transition-colors duration-300">
-                  <div class="flex flex-col sm:flex-row justify-between sm:items-center">
-                      <div>
-                          <p class="text-sm text-slate-400" data-lang="report2_id">Research Vol. 002 · 2025년 9월 3일</p>
-                          <h2 class="text-xl sm:text-2xl font-bold text-white mt-1" data-lang="report2_title">Sharps Technology(STSS) 심층 분석</h2>
-                      </div>
-                      <div class="mt-4 sm:mt-0">
-                          <a href="https://aqcafe.mycafe24.com/rsc/aqrsc002.html" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center justify-center gap-2 rounded-lg px-5 py-2.5 bg-slate-800 text-slate-100 font-semibold shadow-lg hover:bg-sky-500 hover:text-white focus-visible:outline-none transition-colors duration-300">
-                            <span data-lang="view_report_cta">리포트 보기</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-                          </a>
-                      </div>
-                  </div>
-                  <p class="mt-4 text-slate-300 font-kor leading-relaxed" data-lang="report2_desc">의료기기 본업과 솔라나 재무 전략의 이중성</p>
-              </div>
-            </div>
-        </div>
-      </section>
-    </div>
   </main>
 
   <!-- Footer -->
@@ -447,46 +398,6 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Page switching logic
-      const mainContent = document.getElementById('main-content');
-      const researchContent = document.getElementById('research-content');
-      const researchLinks = document.querySelectorAll('.nav-research-link');
-      const mainLinks = document.querySelectorAll('.nav-main-link');
-      const researchNavItems = document.querySelectorAll('a[data-lang="nav_research"], a[data-lang="nav_research_mobile"]');
-
-      function showResearchPage() {
-        mainContent.classList.add('hidden');
-        researchContent.classList.remove('hidden');
-        window.scrollTo(0, 0);
-        researchNavItems.forEach(item => {
-            item.classList.add('text-sky-400', 'font-semibold');
-            item.classList.remove('text-slate-300');
-        });
-      }
-
-      function showMainPage() {
-        researchContent.classList.add('hidden');
-        mainContent.classList.remove('hidden');
-         researchNavItems.forEach(item => {
-            item.classList.remove('text-sky-400', 'font-semibold');
-            item.classList.add('text-slate-300');
-        });
-      }
-
-      researchLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-          e.preventDefault();
-          showResearchPage();
-        });
-      });
-
-      mainLinks.forEach(link => {
-        link.addEventListener('click', () => {
-          showMainPage();
-        });
-      });
-
-
       // Particle Animation
       const canvas = document.getElementById('particle-canvas');
       if (canvas) {
@@ -606,15 +517,15 @@
             nav_about: "About",
             nav_method: "Methodology",
             nav_content: "Content",
+            nav_research: "Research",
             nav_channels: "Channels",
             nav_premium: "Premium",
-            nav_research: "Research",
             nav_about_mobile: "About",
             nav_method_mobile: "Methodology",
             nav_content_mobile: "Content",
+            nav_research_mobile: "Research",
             nav_channels_mobile: "Channels",
             nav_premium_mobile: "Premium",
-            nav_research_mobile: "Research",
             hero_brand_name: "AQUILA RESEARCH",
             hero_brand_name_ko: "Aquila Research",
             hero_subtitle: "Actionable Insights for US Stocks & Crypto Research",
@@ -662,30 +573,21 @@
             contact_desc: "For collaboration, partnership, and other inquiries, please contact us at the email below.",
             footer_disclaimer: "All information provided on this website is for educational and informational purposes only and does not constitute an investment recommendation for any specific financial product. Investments in crypto and derivatives involve high volatility and risk of principal loss. The final decision and responsibility for all investments lie with the investor.",
             copy_success: "Email address copied!",
-            copy_fail: "Failed to copy.",
-            research_page_title: "Aquila Research",
-            research_page_subtitle: "Explore in-depth insights powered by AI-driven data analysis that cuts through market noise.",
-            report1_id: "Research Vol. 001 · August 28, 2025",
-            report1_title: "Solana Ecosystem Deep Dive",
-            report1_desc: "Institutional adoption, technical outlook, and high-beta investment opportunities.",
-            report2_id: "Research Vol. 002 · September 3, 2025",
-            report2_title: "Sharps Technology (STSS) Deep Dive",
-            report2_desc: "The duality of its core medical device business and Solana financial strategy.",
-            view_report_cta: "View Report"
+            copy_fail: "Failed to copy."
         },
         ko: {
             nav_about: "소개",
             nav_method: "방법론",
             nav_content: "콘텐츠",
+            nav_research: "Aquila Research",
             nav_channels: "채널",
             nav_premium: "프리미엄",
-            nav_research: "Aquila Research",
             nav_about_mobile: "소개",
             nav_method_mobile: "방법론",
             nav_content_mobile: "콘텐츠",
+            nav_research_mobile: "Aquila Research",
             nav_channels_mobile: "채널",
             nav_premium_mobile: "프리미엄",
-            nav_research_mobile: "Aquila Research",
             hero_brand_name: "AQUILA RESEARCH",
             hero_brand_name_ko: "아퀼라 리서치",
             hero_subtitle: "미국 주식·크립토 리서치를 위한 <span class='font-semibold text-slate-100'>실전 인사이트</span>",
@@ -733,16 +635,7 @@
             contact_desc: "협업, 제휴 및 기타 문의 사항은 아래 이메일로 연락 주시기 바랍니다.",
             footer_disclaimer: "본 웹사이트에서 제공되는 모든 정보는 교육 및 정보 제공을 목적으로 하며, 특정 금융 상품에 대한 투자 권유가 아닙니다. 크립토 및 파생상품 투자는 높은 변동성과 원금 손실의 위험을 수반하므로, 모든 투자에 대한 최종 결정과 책임은 투자자 본인에게 있습니다.",
             copy_success: "이메일 주소가 복사되었습니다!",
-            copy_fail: "복사에 실패했습니다.",
-            research_page_title: "Aquila Research",
-            research_page_subtitle: "AI 기반의 데이터 분석과 시장의 핵심을 꿰뚫는 깊이 있는 인사이트를 만나보세요.",
-            report1_id: "Research Vol. 001 · 2025년 8월 28일",
-            report1_title: "솔라나 생태계 심층 분석",
-            report1_desc: "기관 채택, 기술적 전망 및 고베타 투자 기회",
-            report2_id: "Research Vol. 002 · 2025년 9월 3일",
-            report2_title: "Sharps Technology(STSS) 심층 분석",
-            report2_desc: "의료기기 본업과 솔라나 재무 전략의 이중성",
-            view_report_cta: "리포트 보기"
+            copy_fail: "복사에 실패했습니다."
         }
       };
       

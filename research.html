@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Research — Aquila Research</title>
+  <meta name="description" content="Aquila Research의 심층 분석 리포트와 시장 분석 자료를 확인하세요." />
+  <meta property="og:title" content="Research — Aquila Research" />
+  <meta property="og:description" content="Aquila Research의 심층 분석 리포트와 시장 분석 자료를 확인하세요." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://aqcafe.mycafe24.com/img/logo.png" />
+  <meta name="theme-color" content="#010409" />
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Poppins:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.jsdelivr.net/npm/disable-devtool@latest/disable-devtool.min.js"></script>
+  
+  <style>
+    :root { 
+      --dark-bg: #010409;
+      --slate-900: #0d1117;
+      --slate-800: #161b22;
+      --slate-700: #21262d;
+      --slate-400: #8b949e;
+      --slate-300: #c9d1d9;
+      --accent: #58a6ff; 
+      --accent-glow: rgba(88, 166, 255, 0.5);
+    }
+    html { 
+      scroll-behavior: smooth; 
+    }
+    body { 
+      font-family: 'Poppins', 'Noto Sans KR', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background-color: var(--dark-bg);
+      color: var(--slate-300);
+    }
+    .font-kor { font-family: 'Noto Sans KR', sans-serif; }
+    .font-display { font-family: 'Cormorant Garamond', serif; }
+
+    a:focus-visible, button:focus-visible { 
+      outline: 3px solid var(--accent); 
+      outline-offset: 2px; 
+      border-radius: 8px;
+    }
+    .section-bg {
+        background-color: var(--slate-900);
+    }
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-slate-900/80 backdrop-blur-lg border-b border-slate-700/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <a href="./index.html" class="flex items-center gap-3 group" aria-label="Aquila Research Home">
+          <img src="https://aqcafe.mycafe24.com/img/logo.png" alt="Aquila Research Logo" class="h-10 w-10 rounded-full object-cover transition-transform group-hover:scale-110" />
+        </a>
+        <div class="flex items-center gap-6">
+            <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+              <a href="./index.html#about" class="text-slate-300 hover:text-sky-400 transition-colors" data-lang="nav_about">소개</a>
+              <a href="./index.html#method" class="text-slate-300 hover:text-sky-400 transition-colors" data-lang="nav_method">방법론</a>
+              <a href="./index.html#content" class="text-slate-300 hover:text-sky-400 transition-colors" data-lang="nav_content">콘텐츠</a>
+              <a href="./research.html" class="text-sky-400 font-semibold" data-lang="nav_research">Research</a>
+              <a href="./index.html#channels" class="text-slate-300 hover:text-sky-400 transition-colors" data-lang="nav_channels">채널</a>
+              <a href="./index.html#premium" class="text-slate-300 hover:text-sky-400 transition-colors" data-lang="nav_premium">프리미엄</a>
+            </nav>
+            <!-- Language Toggle -->
+            <div class="hidden sm:flex items-center border-l border-slate-700 pl-6">
+                <button id="lang-ko" class="text-sm font-semibold text-white px-2 py-1">KO</button>
+                <span class="text-slate-600">/</span>
+                <button id="lang-en" class="text-sm font-semibold text-slate-500 hover:text-white px-2 py-1 transition-colors">EN</button>
+            </div>
+            <button id="navBtn" class="md:hidden inline-flex items-center justify-center rounded-md p-2 text-slate-300 hover:bg-slate-800" aria-label="Open menu">
+              <svg id="menuIconOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="6" x2="20" y2="6"></line><line x1="4" y1="18" x2="20" y2="18"></line></svg>
+              <svg id="menuIconClose" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+      </div>
+    </div>
+    <!-- Mobile Menu -->
+    <div id="mobileNav" class="hidden md:hidden bg-slate-900 border-t border-slate-700">
+      <nav class="px-4 py-4 space-y-2 text-sm font-medium">
+        <a href="./index.html#about" class="block py-2 px-3 rounded-md text-slate-300 hover:bg-slate-800" data-lang="nav_about_mobile">소개</a>
+        <a href="./index.html#method" class="block py-2 px-3 rounded-md text-slate-300 hover:bg-slate-800" data-lang="nav_method_mobile">방법론</a>
+        <a href="./index.html#content" class="block py-2 px-3 rounded-md text-slate-300 hover:bg-slate-800" data-lang="nav_content_mobile">콘텐츠</a>
+        <a href="./research.html" class="block py-2 px-3 rounded-md text-sky-400 bg-slate-800" data-lang="nav_research_mobile">Research</a>
+        <a href="./index.html#channels" class="block py-2 px-3 rounded-md text-slate-300 hover:bg-slate-800" data-lang="nav_channels_mobile">채널</a>
+        <a href="./index.html#premium" class="block py-2 px-3 rounded-md text-slate-300 hover:bg-slate-800" data-lang="nav_premium_mobile">프리미엄</a>
+        <div class="sm:hidden flex items-center justify-center pt-4 border-t border-slate-700">
+            <button id="lang-ko-mobile" class="text-sm font-semibold text-white px-3 py-1">KO</button>
+            <span class="text-slate-600">/</span>
+            <button id="lang-en-mobile" class="text-sm font-semibold text-slate-500 hover:text-white px-3 py-1 transition-colors">EN</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="research" class="py-20 sm:py-24">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-16">
+              <h1 class="text-4xl sm:text-5xl font-bold text-white" data-lang="research_page_title">Aquila Research</h1>
+              <p class="mt-4 max-w-2xl mx-auto text-slate-300 font-kor" data-lang="research_page_subtitle">AI 기반의 데이터 분석과 시장의 핵심을 꿰뚫는 깊이 있는 인사이트를 만나보세요.</p>
+          </div>
+          
+          <div class="space-y-8">
+            <!-- Report 1 -->
+            <div class="bg-slate-900 border border-slate-700 rounded-2xl p-6 sm:p-8 hover:border-sky-500 transition-colors duration-300">
+                <div class="flex flex-col sm:flex-row justify-between sm:items-center">
+                    <div>
+                        <p class="text-sm text-slate-400" data-lang="report1_id">Research Vol. 001 · 2025년 8월 28일</p>
+                        <h2 class="text-xl sm:text-2xl font-bold text-white mt-1" data-lang="report1_title">솔라나 생태계 심층 분석</h2>
+                    </div>
+                    <div class="mt-4 sm:mt-0">
+                        <a href="https://aqcafe.mycafe24.com/rsc/aqrsc001.html" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center justify-center gap-2 rounded-lg px-5 py-2.5 bg-slate-800 text-slate-100 font-semibold shadow-lg hover:bg-sky-500 hover:text-white focus-visible:outline-none transition-colors duration-300">
+                          <span data-lang="view_report_cta">리포트 보기</span>
+                          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                        </a>
+                    </div>
+                </div>
+                <p class="mt-4 text-slate-300 font-kor leading-relaxed" data-lang="report1_desc">기관 채택, 기술적 전망 및 고베타 투자 기회</p>
+            </div>
+
+            <!-- Report 2 -->
+             <div class="bg-slate-900 border border-slate-700 rounded-2xl p-6 sm:p-8 hover:border-sky-500 transition-colors duration-300">
+                <div class="flex flex-col sm:flex-row justify-between sm:items-center">
+                    <div>
+                        <p class="text-sm text-slate-400" data-lang="report2_id">Research Vol. 002 · 2025년 9월 3일</p>
+                        <h2 class="text-xl sm:text-2xl font-bold text-white mt-1" data-lang="report2_title">Sharps Technology(STSS) 심층 분석</h2>
+                    </div>
+                    <div class="mt-4 sm:mt-0">
+                        <a href="https://aqcafe.mycafe24.com/rsc/aqrsc002.html" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center justify-center gap-2 rounded-lg px-5 py-2.5 bg-slate-800 text-slate-100 font-semibold shadow-lg hover:bg-sky-500 hover:text-white focus-visible:outline-none transition-colors duration-300">
+                          <span data-lang="view_report_cta">리포트 보기</span>
+                          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                        </a>
+                    </div>
+                </div>
+                <p class="mt-4 text-slate-300 font-kor leading-relaxed" data-lang="report2_desc">의료기기 본업과 솔라나 재무 전략의 이중성</p>
+            </div>
+          </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-700 section-bg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-3 group">
+          <img src="https://aqcafe.mycafe24.com/img/logo.png" alt="Aquila Research Logo" class="h-10 w-10 rounded-full object-cover transition-transform group-hover:scale-110" />
+          <div>
+            <div class="font-semibold text-white">Aquila Research</div>
+            <div class="text-xs text-slate-400">© <span id="yy"></span> All rights reserved.</div>
+          </div>
+        </div>
+        <div class="text-xs text-slate-400 text-center md:text-right max-w-xl leading-relaxed font-kor" data-lang="footer_disclaimer">
+          본 웹사이트에서 제공되는 모든 정보는 교육 및 정보 제공을 목적으로 하며, 특정 금융 상품에 대한 투자 권유가 아닙니다. 크립토 및 파생상품 투자는 높은 변동성과 원금 손실의 위험을 수반하므로, 모든 투자에 대한 최종 결정과 책임은 투자자 본인에게 있습니다.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const translations = {
+        en: {
+            nav_about: "About",
+            nav_method: "Methodology",
+            nav_content: "Content",
+            nav_channels: "Channels",
+            nav_premium: "Premium",
+            nav_research: "Research",
+            nav_about_mobile: "About",
+            nav_method_mobile: "Methodology",
+            nav_content_mobile: "Content",
+            nav_channels_mobile: "Channels",
+            nav_premium_mobile: "Premium",
+            nav_research_mobile: "Research",
+            footer_disclaimer: "All information provided on this website is for educational and informational purposes only and does not constitute an investment recommendation for any specific financial product. Investments in crypto and derivatives involve high volatility and risk of principal loss. The final decision and responsibility for all investments lie with the investor.",
+            research_page_title: "Aquila Research",
+            research_page_subtitle: "Explore in-depth insights powered by AI-driven data analysis that cuts through market noise.",
+            report1_id: "Research Vol. 001 · August 28, 2025",
+            report1_title: "Solana Ecosystem Deep Dive",
+            report1_desc: "Institutional adoption, technical outlook, and high-beta investment opportunities.",
+            report2_id: "Research Vol. 002 · September 3, 2025",
+            report2_title: "Sharps Technology (STSS) Deep Dive",
+            report2_desc: "The duality of its core medical device business and Solana financial strategy.",
+            view_report_cta: "View Report"
+        },
+        ko: {
+            nav_about: "소개",
+            nav_method: "방법론",
+            nav_content: "콘텐츠",
+            nav_channels: "채널",
+            nav_premium: "프리미엄",
+            nav_research: "Aquila Research",
+            nav_about_mobile: "소개",
+            nav_method_mobile: "방법론",
+            nav_content_mobile: "콘텐츠",
+            nav_channels_mobile: "채널",
+            nav_premium_mobile: "프리미엄",
+            nav_research_mobile: "Aquila Research",
+            footer_disclaimer: "본 웹사이트에서 제공되는 모든 정보는 교육 및 정보 제공을 목적으로 하며, 특정 금융 상품에 대한 투자 권유가 아닙니다. 크립토 및 파생상품 투자는 높은 변동성과 원금 손실의 위험을 수반하므로, 모든 투자에 대한 최종 결정과 책임은 투자자 본인에게 있습니다.",
+            research_page_title: "Aquila Research",
+            research_page_subtitle: "AI 기반의 데이터 분석과 시장의 핵심을 꿰뚫는 깊이 있는 인사이트를 만나보세요.",
+            report1_id: "Research Vol. 001 · 2025년 8월 28일",
+            report1_title: "솔라나 생태계 심층 분석",
+            report1_desc: "기관 채택, 기술적 전망 및 고베타 투자 기회",
+            report2_id: "Research Vol. 002 · 2025년 9월 3일",
+            report2_title: "Sharps Technology(STSS) 심층 분석",
+            report2_desc: "의료기기 본업과 솔라나 재무 전략의 이중성",
+            view_report_cta: "리포트 보기"
+        }
+      };
+      
+      let currentLang = 'ko';
+
+      const langKoBtn = document.getElementById('lang-ko');
+      const langEnBtn = document.getElementById('lang-en');
+      const langKoMobileBtn = document.getElementById('lang-ko-mobile');
+      const langEnMobileBtn = document.getElementById('lang-en-mobile');
+
+      function setLanguage(lang) {
+        currentLang = lang;
+        document.documentElement.lang = lang;
+        const isKo = lang === 'ko';
+        langKoBtn.classList.toggle('text-white', isKo);
+        langKoBtn.classList.toggle('text-slate-500', !isKo);
+        langKoBtn.classList.toggle('hover:text-white', !isKo);
+        langEnBtn.classList.toggle('text-white', !isKo);
+        langEnBtn.classList.toggle('text-slate-500', isKo);
+        langEnBtn.classList.toggle('hover:text-white', isKo);
+        langKoMobileBtn.classList.toggle('text-white', isKo);
+        langKoMobileBtn.classList.toggle('text-slate-500', !isKo);
+        langEnMobileBtn.classList.toggle('text-white', !isKo);
+        langEnMobileBtn.classList.toggle('text-slate-500', isKo);
+        document.querySelectorAll('[data-lang]').forEach(el => {
+            const key = el.getAttribute('data-lang');
+            if (translations[lang] && translations[lang][key]) {
+                el.innerHTML = translations[lang][key];
+            }
+        });
+      }
+
+      langKoBtn.addEventListener('click', () => setLanguage('ko'));
+      langEnBtn.addEventListener('click', () => setLanguage('en'));
+      langKoMobileBtn.addEventListener('click', () => setLanguage('ko'));
+      langEnMobileBtn.addEventListener('click', () => setLanguage('en'));
+      setLanguage(currentLang);
+
+      const yearEl = document.getElementById('yy');
+      if (yearEl) {
+        yearEl.textContent = new Date().getFullYear();
+      }
+
+      const navBtn = document.getElementById('navBtn');
+      const mobileNav = document.getElementById('mobileNav');
+      const menuIconOpen = document.getElementById('menuIconOpen');
+      const menuIconClose = document.getElementById('menuIconClose');
+      
+      if (navBtn && mobileNav && menuIconOpen && menuIconClose) {
+        navBtn.addEventListener('click', () => {
+          mobileNav.classList.toggle('hidden');
+          menuIconOpen.classList.toggle('hidden');
+          menuIconClose.classList.toggle('hidden');
+        });
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.add('hidden');
+                menuIconOpen.classList.remove('hidden');
+                menuIconClose.classList.add('hidden');
+            });
+        });
+      }
+    });
+  </script>
+</body>
+</html>
+
